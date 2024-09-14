@@ -6,7 +6,7 @@ def backtracking_search(puzzle):
     nodes_visited = set()  # Conjunto para rastrear estados já visitados
     total_successors = 0  # Contador para o total de sucessores gerados
 
-    def backtrack(state, path, visited):
+    def backtrack(state, path, visited, g):
         nonlocal nodes_expanded, total_successors  # Permite modificar variáveis de fora da função
 
         # Verifica se o estado atual é o objetivo
@@ -17,6 +17,7 @@ def backtracking_search(puzzle):
             return {
                 'caminho': path,  # Caminho percorrido até o estado objetivo
                 'profundidade': len(path) - 1,  # Profundidade do estado objetivo
+                'custo': g,
                 'nodos_expandidos': nodes_expanded,  # Total de nós expandidos
                 'nodos_visitados': len(visited),  # Total de estados visitados
                 'fator_ramificacao': branching_factor  # Fator de ramificação calculado
@@ -30,11 +31,11 @@ def backtracking_search(puzzle):
         total_successors += len(successors)
 
         # Para cada sucessor, verifica se ele já foi visitado
-        for successor, _ in successors:
+        for successor, move_cost in successors:
             if successor not in visited:
                 visited.add(successor)  # Marca o sucessor como visitado
                 # Realiza a chamada recursiva para explorar o sucessor
-                result = backtrack(successor, path + [successor], visited)
+                result = backtrack(successor, path + [successor], visited, g + move_cost)
                 # Se encontrar uma solução, retorna o resultado
                 if result:
                     return result
@@ -49,7 +50,7 @@ def backtracking_search(puzzle):
     visited = set()  # Conjunto para armazenar estados visitados
     visited.add(start_state)  # Adiciona o estado inicial como visitado
     # Inicia o processo de backtracking a partir do estado inicial
-    result = backtrack(start_state, [start_state], visited)
+    result = backtrack(start_state, [start_state], visited, 0)
     
     # Se uma solução for encontrada, atualiza os dados finais
     if result:

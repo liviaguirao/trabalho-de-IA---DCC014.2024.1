@@ -9,7 +9,7 @@ def depth_limited_search(puzzle, limit=50):
     nodes_visited = 0  # Contador para o número de sucessores gerados
 
     # Função auxiliar recursiva que realiza a busca limitada por profundidade
-    def recursive_dls(state, path, depth, visited):
+    def recursive_dls(state, path, depth,g, visited):
         nonlocal nodes_expanded, nodes_visited  # Acessa as variáveis externas
         nodes_expanded += 1  # Incrementa o número de nós expandidos
 
@@ -20,6 +20,7 @@ def depth_limited_search(puzzle, limit=50):
             return {
                 'caminho': path,  # O caminho até o estado objetivo
                 'profundidade': depth,  # Profundidade do caminho
+                'custo':g,
                 'nodos_expandidos': nodes_expanded,  # Número total de nós expandidos
                 'nodos_visitados': nodes_visited,  # Número total de nós visitados
                 'fator_ramificacao': nodes_visited / nodes_expanded if nodes_expanded else 0,  # Fator de ramificação médio
@@ -31,14 +32,14 @@ def depth_limited_search(puzzle, limit=50):
             return None  # Retorna None se o limite de profundidade foi atingido
         
         # Expande o estado atual, gerando seus sucessores
-        for successor, _ in puzzle.get_successors(state):
+        for successor, move_cost in puzzle.get_successors(state):
             successor = tuple(successor)  # Converte o sucessor para tupla
             nodes_visited += 1  # Contabiliza os sucessores visitados
             # Verifica se o sucessor já foi visitado
             if successor not in visited:
                 visited.add(successor)  # Marca o sucessor como visitado
                 # Chama recursivamente para explorar o sucessor
-                result = recursive_dls(successor, path + [successor], depth + 1, visited)
+                result = recursive_dls(successor, path + [successor], depth + 1, g + move_cost, visited)
                 if result:  # Se encontrar o objetivo, retorna o resultado
                     return result
         return None  # Retorna None se não houver solução dentro do limite de profundidade
@@ -48,7 +49,7 @@ def depth_limited_search(puzzle, limit=50):
     # Conjunto para armazenar estados visitados, evitando loops
     visited = set([tuple(start_state)])  # Converte o estado inicial para tupla
     # Chama a função recursiva de busca limitada por profundidade a partir do estado inicial
-    result = recursive_dls(start_state, [start_state], 0, visited)
+    result = recursive_dls(start_state, [start_state], 0,0, visited)
 
     # Calcula o tempo total de execução
     end_time = time.time()
@@ -59,6 +60,7 @@ def depth_limited_search(puzzle, limit=50):
     return {
         'caminho': None,  # Não encontrou solução
         'profundidade': 0,
+        'custo':0,
         'nodos_expandidos': nodes_expanded,  # Nós expandidos durante a busca
         'nodos_visitados': nodes_visited,  # Nós visitados durante a busca
         'fator_ramificacao': nodes_visited / nodes_expanded if nodes_expanded else 0,  # Fator de ramificação médio
