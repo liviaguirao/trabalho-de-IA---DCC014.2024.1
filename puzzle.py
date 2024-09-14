@@ -28,23 +28,25 @@ class ReguaPuzzle:
         return state in self.goal_state
 
     def get_successors(self, state):
-        # Verifica se há um espaço vazio '-' no estado
-        if '-' not in state:
-            return []
-        
-        # Encontra a posição do espaço vazio '-'
-        empty_pos = state.index('-')
-        successors = []
-        
-        # Converte o estado atual para uma lista mutável
-        state_list = list(state)
+            # Verifica se há um espaço vazio '-' no estado
+            if '-' not in state:
+                return []
+            
+            # Encontra a posição do espaço vazio '-'
+            empty_pos = state.index('-')
+            successors = []
+            
+            # Converte o estado atual para uma lista mutável
+            state_list = list(state)
+            N = (len(state_list) - 1) // 2
 
-        # Gera os sucessores possíveis ao trocar o espaço vazio com qualquer outro bloco
-        for i in range(len(state_list)):
-            if state_list[i] != '-':
-                # Cria uma nova configuração trocando o espaço vazio com o bloco na posição `i`
-                new_state = state_list[:]
-                new_state[empty_pos], new_state[i] = new_state[i], new_state[empty_pos]
-                # Adiciona o novo estado gerado como um sucessor (custo de movimento = 1)
-                successors.append((tuple(new_state), 1))  # O custo de mover um bloco é 1
-        return successors  # Retorna a lista de sucessores
+            # Gera os sucessores possíveis ao trocar o espaço vazio com qualquer outro bloco
+            for i in range(len(state_list)):
+                if state_list[i] != '-' and abs(i - empty_pos) <= N:
+                    # Cria uma nova configuração trocando o espaço vazio com o bloco na posição `i`
+                    new_state = state_list[:]
+                    new_state[empty_pos], new_state[i] = new_state[i], new_state[empty_pos]
+                    move_cost = abs(i - empty_pos)
+                    # Adiciona o novo estado gerado como um sucessor (custo de movimento = 1)
+                    successors.append((tuple(new_state), move_cost))  # O custo de mover um bloco é 1
+            return successors  # Retorna a lista de sucessores
