@@ -1,16 +1,34 @@
-# Regua Puzzle - Trabalho de IA
+# Nome do Projeto
 
-**Descrição:**
+> Breve descrição do projeto, explicando o que ele faz e seu propósito.
 
-Este projeto tem como objetivo implementar diversos algoritmos de busca para resolver o problema do Regua Puzzle, como parte do trabalho prático da disciplina de Inteligência Artificial.
+## Tabela de Conteúdos
 
-**Tecnologias:**
+- [Instalação](#instalação)
+- [Como Usar](#como-usar)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias](#tecnologias)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
+- [Contato](#contato)
 
-* **Linguagem:** C++
-* **Ferramentas:** Makefile
+## Instalação
 
-**Instalação:**
+### Pré-requisitos
 
-1. Clone este repositório:
-   ```bash
-   git clone [https://github.com/seu_usuario/regua-puzzle.git](https://github.com/seu_usuario/regua-puzzle.git)
+- Liste aqui os pré-requisitos necessários para rodar o projeto, como versão do Node, Python, ou outras dependências.
+
+### Passos para Instalação
+
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/seu-projeto.git
+
+# Acesse o diretório do projeto
+cd seu-projeto
+
+# Instale as dependências
+npm install  # ou pip install -r requirements.txt, dependendo da stack
+
+# Execute a aplicação
+npm start  # ou python app.py
