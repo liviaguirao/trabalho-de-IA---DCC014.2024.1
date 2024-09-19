@@ -1,6 +1,6 @@
 # algorithms/ida_star_search.py
 import time
-from heuristics import heuristic_hamming  # Pode ser substituído por heuristic_manhattan, se preferir.
+from heuristics import heuristic_hamming 
 
 def ida_star_search(puzzle):
     # Marca o tempo de início da execução

@@ -32,15 +32,16 @@ def backtracking_search(puzzle):
 
         # Para cada sucessor, verifica se ele já foi visitado
         for successor, move_cost in successors:
-            if successor not in visited:
-                visited.add(successor)  # Marca o sucessor como visitado
+            successor_tuple = tuple(successor)  # Converte o sucessor para tupla
+            if successor_tuple not in visited:
+                visited.add(successor_tuple)  # Marca o sucessor como visitado
                 # Realiza a chamada recursiva para explorar o sucessor
                 result = backtrack(successor, path + [successor], visited, g + move_cost)
                 # Se encontrar uma solução, retorna o resultado
                 if result:
                     return result
                 # Se não encontrar, remove o sucessor do conjunto de visitados para explorar outros caminhos
-                visited.remove(successor)
+                visited.remove(successor_tuple)
         
         # Retorna None se nenhum sucessor levar ao estado objetivo
         return None
@@ -48,7 +49,7 @@ def backtracking_search(puzzle):
     # Estado inicial do puzzle
     start_state = puzzle.initial_state
     visited = set()  # Conjunto para armazenar estados visitados
-    visited.add(start_state)  # Adiciona o estado inicial como visitado
+    visited.add(tuple(start_state))  # Adiciona o estado inicial como visitado (convertido para tupla)
     # Inicia o processo de backtracking a partir do estado inicial
     result = backtrack(start_state, [start_state], visited, 0)
     
